@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Image Search</title>
+        <title>Google Image Search</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
         <a href="index.html">Google Search</a>
+        <br>
+        <div id="image-wrap">
+            <p class="search">
+                <span style='color: #4285F4'>G</span>
+                <span style='color: #DB4437'>o</span>
+                <span style='color: #F4B400'>o</span>
+                <span style='color: #4285F4'>g</span>
+                <span style='color: #0F9D58'>l</span>
+                <span style='color: #DB4437'>e</span>
+            </p>
+            <p id="images">
+                Images
+            </p>
+        </div>
         <form action="https://google.com/search">
             <input type="text" name="q">
+            <br>
             <input type="hidden" name="tbm" value="isch">
-            <input type="submit" value="Google Search">
+            <input type="submit" value="Google Image Search">
         </form>
     </body>
 </html>

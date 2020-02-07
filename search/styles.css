@@ -8,43 +8,53 @@ form {
 
 a {
     float: right;
-    color: grey;
+    color: rgb(83, 83, 83);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 13px;
+    margin: 20px 30px 0px 0px;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-p {
+.search {
     text-align: center;
     font-weight: 500;
-    font-size: 80px;
+    font-size: 100px;
     padding: 0px;
+    margin: 150px 0px 0px 0px;
     letter-spacing: -.15em;
 }
 
-.search-letter {
+#images {
+    color: #4285F4;
+    font-size: 10;
+    font-weight: 500;
+    text-align: right;
+    margin: 0px;
 }
 
-.center-form {
-    
+#image-wrap {
+    text-align: center;
+    margin: auto;
+    width: 320px;
 }
 
 input[type=text] {
     width: 600px;
     height: 30px;
     padding: 10px 10px;
+    margin: 10px 10px;
     border-radius: 25px;
-    border: 1px solid rgb(185, 185, 185);
-    font-size: 14px;
+    border: 1px solid rgb(219, 219, 219);
+    font-size: 16px;
     font-weight: 500;
 }
 
 input[type=text]:hover {
-    border: 1.5px solid rgb(185, 185, 185);
-    margin: 9px 9px;
+    border: 1px solid rgb(226, 226, 226);
+    box-shadow: 1px 1px 1px 1px rgb(223, 223, 223), ;
 }
 
 
@@ -61,4 +71,66 @@ input[type=submit] {
 input[type=submit]:hover {
     color: black;
     border: 1px solid grey;
+}
+
+#adv-search {
+    margin: 10px 0px 25px 35px;
+    font-size: 20px;
+    color: #DB4437;
+}
+
+hr {
+    border-top: .25px solid rgb(230, 230, 230);
+}
+
+h3 {
+    font-weight: 300;
+    font-size: 16px;
+    margin: 40px 0px 0px 35px;
+}
+
+table {
+    margin: 10px 0px 0px 35px;
+    border-collapse: collapse;
+}
+
+td {
+    height: 30px;
+    padding: 10px 20px 5px 0px;
+}
+
+.adv-text {
+    text-align: left;
+    font-size: 13px;
+}
+
+input.adv-input {
+    border-radius: 0px;
+    padding: 0px 0px 0px 5px;
+    margin: 0px;
+    font-size: 13px;
+}
+
+#adv-submit {
+    background-color: #4285F4;
+    color: white;
+    text-align: right;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 10px 12px;
+    float: right;
+    margin: 10px 0px;
+}
+
+#adv-submit.hover {
+    background-color: rgb(26, 96, 209);
+    border: 0px;
+}
+
+#adv-google {
+    margin: 0px;
+    padding: 10px 10px;
+    text-align: left;
+    font-size: 30px;
 }

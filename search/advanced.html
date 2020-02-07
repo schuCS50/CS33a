@@ -6,12 +6,45 @@
     </head>
     <body>
         <a href="index.html">Google Search</a>
+        <p id="adv-google" class="search">
+            <span style='color: #4285F4'>G</span>
+            <span style='color: #DB4437'>o</span>
+            <span style='color: #F4B400'>o</span>
+            <span style='color: #4285F4'>g</span>
+            <span style='color: #0F9D58'>l</span>
+            <span style='color: #DB4437'>e</span>
+        </p>
+        <br>
+        <p id="adv-search">
+            Advanced Search
+        </p>
+        <hr>
+        <h3>
+            Find pages with...
+        </h3>
         <form action="https://google.com/search">
-            All these words: <input type="text" name="as_q">
-            This exact word or phrase: <input type="text" name="as_epq">
-            Any of these words: <input type="text" name="as_oq">
-            None of these words: <input type="text" name="as_eq">
-            <input type="submit" value="Google Search">
+            <table>
+                <tr>
+                    <td class="adv-text">all these words:</td>
+                    <td><input class="adv-input" type="text" name="as_q"></td>
+                </tr>
+                <tr>
+                    <td class="adv-text">this exact word or phrase:</tdclass="adv-text">
+                    <td><input class="adv-input" type="text" name="as_epq"></td>
+                </tr>
+                <tr>
+                    <td class="adv-text">any of these words:</td>
+                    <td><input class="adv-input" type="text" name="as_oq"></td>
+                </tr>
+                <tr>
+                    <td class="adv-text">none of these words:</td>
+                    <td><input class="adv-input" type="text" name="as_eq"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input id="adv-submit" type="submit" value="Advanced Search"></td>
+                </tr>
+            </table>
         </form>
     </body>
 </html>
