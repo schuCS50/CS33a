@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
-
-    <br>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Edit">
+    </form>
     {% for out in entry_output %}
         {{ out|safe }}
     {% endfor %}
