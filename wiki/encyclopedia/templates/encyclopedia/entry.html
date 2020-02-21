@@ -1,0 +1,14 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+
+    <br>
+    {% for out in entry_output %}
+        {{ out|safe }}
+    {% endfor %}
+
+{% endblock %}
