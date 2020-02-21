@@ -20,7 +20,7 @@ class NewArticleForm(forms.Form):
             attrs={'placeholder': 'Markdown Content Here'}
     ))
 
-    def validate_title(self):
+    def clean_title(self):
         print("Called")
         data = self.cleaned_data.get("title")
         current_entries = util.list_entries()
@@ -29,17 +29,6 @@ class NewArticleForm(forms.Form):
                 message = "There is already an article of the same name. Please rename article."
                 raise forms.ValidationError(message)
         return data
-
-class EditForm(forms.Form):
-    value = 'suff'
-    #def __init__(self, value):
-    #    self.value = value
-
-    article = forms.CharField(
-        widget=forms.Textarea(
-            attrs={'placeholder': 'Markdown Content Here',
-            'value': value}
-    ))
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -52,6 +41,12 @@ def new(request):
         if form.is_valid():
             print(form.cleaned_data["title"])
             print(form.cleaned_data["article"])
+
+            file = ContentFile(form.cleaned_data["article"])
+            path = 'entries/' + form.cleaned_data["title"] + '.md'
+            default_storage.delete(path)
+            default_storage.save(path, file)
+            return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "encyclopedia/new.html", {
                 "form": form
@@ -84,8 +79,6 @@ def search(request):
 def edit(request, entry):
     if request.method == "POST":
         form = request.POST
-        print(form["entry"])
-        print(form["article"])
 
         file = ContentFile(form["article"])
         path = 'entries/' + form["entry"] + '.md'

@@ -10,6 +10,11 @@
     <form action="{% url 'new' %}" method="POST">
         {% csrf_token %}
         {{ form }}
+        
+        
+        {% for error in form.title.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
         <!--
         <input class="new-article" type="text" name="name" placeholder="Article Name">
         <hr>
