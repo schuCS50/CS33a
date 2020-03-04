@@ -3,5 +3,29 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Listing</th>
+                <th>Description</th>
+                <th>Current Price</th>
+                <th>Photo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for listing in listings %}
+            <tr>
+                <td><a href="listing/{{ listing.id }}">{{ listing.title }}</a></td>
+                <td>{{ listing.description }}</td>
+                {% if listing.max_bid %}
+                    <td>{{ listing.max_bid }}</td>
+                {% else %}
+                    <td>{{ listing.startingBid }}</td>
+                {% endif %}
+                <td><img src="{{ listing.image }}"></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
 {% endblock %}

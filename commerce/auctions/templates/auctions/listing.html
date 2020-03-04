@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>{{ listing.title }}</h2>
+    <p>{{ listing.description }}</p>
+    <img src="{{ listing.image }}">
+    <h3>{{ listing.category }}</h3>
+    <h3>{{ listing.active }}</h3>
+    <hr>
+    <h2>Make a Bid</h2>
+    <form action="{% url 'listing' listing.id %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Bid">
+    </form>
+
+    <hr>
+
+
+        <h2>BIDS</h2>
+    <p><strong>Starting Bid</strong>: {{ listing.startingBid }}</p>
+    {% for bid in bids %}
+    <p>{{ bid.bid }}</p>
+    {% endfor %}
+
+        <h2>COMMENTS</h2>
+    {% for comment in comments %}
+    <p>{{ comment.comment }}</p>
+    {% endfor %}
+    
+{% endblock %}
