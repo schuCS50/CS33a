@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    <h2>Active '{{category}}' Listings</h2>
 
     <table class="table">
         <thead>
@@ -16,7 +16,7 @@
         <tbody>
             {% for listing in listings %}
                 <tr>
-                    <td><a href="listing/{{ listing.id }}">{{ listing.title }}</a></td>
+                    <td><a href="/listing/{{ listing.id }}">{{ listing.title }}</a></td>
                     <td>{{ listing.description }}</td>
                     {% if listing.max_bid %}
                         <td>${{ listing.max_bid|floatformat:2 }}</td>

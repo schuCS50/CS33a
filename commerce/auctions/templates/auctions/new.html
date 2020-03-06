@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if request.user.is_authenticated %}
+        <form action="{% url 'new' %}" method="POST">
+            <div class="form-group">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" class="btn btn-primary" value="Create New Listing">
+            </div>
+        </form>
+
+    {% else %}
+        <p>Must be logged in to create new listing.</p>
+    {% endif %}
+    
+{% endblock %}

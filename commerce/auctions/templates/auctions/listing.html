@@ -2,30 +2,117 @@
 
 {% block body %}
     <h2>{{ listing.title }}</h2>
-    <p>{{ listing.description }}</p>
-    <img src="{{ listing.image }}">
-    <h3>{{ listing.category }}</h3>
-    <h3>{{ listing.active }}</h3>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>{{ listing.description }}</td>
+                {% if max_bid %}
+                    <td>Current Bid: ${{ max_bid.bid|floatformat:2 }}</td>
+                {% else %}
+                    <td>Starting Bid ${{ listing.startingBid|floatformat:2 }}</td>
+                {% endif %}
+                <td>{{ listing.category }}</td>
+                <td><img src="{{ listing.image }}"></td>
+            </tr>
+        </tbody>
+    </table>
     <hr>
-    <h2>Make a Bid</h2>
-    <form action="{% url 'listing' listing.id %}" method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Bid">
-    </form>
 
-    <hr>
+    {% if request.user.is_authenticated %}
 
+    {% if request.user == max_bid.user and not listing.active %}
+        <div class="alert alert-success" role="alert">
+            <h2>YAAY You win!!!!!</h2>
+        </div>
+        <hr>
+    {% endif %}
+        {% if listing.active %}
+            <h2>Make a Bid</h2>
+            <form action="{% url 'listing' listing.id %}" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input class="btn btn-primary" type="submit" value="Bid">
+            </form>
+            <hr>
+        {% endif %}
 
-        <h2>BIDS</h2>
-    <p><strong>Starting Bid</strong>: {{ listing.startingBid }}</p>
-    {% for bid in bids %}
-    <p>{{ bid.bid }}</p>
-    {% endfor %}
+        {% if watching %}
+            <form action="{% url 'watchlist' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="listingid" value="{{ listing.id }}">
+                <input type="hidden" name="action" value="REMOVE">
+                <input class="btn btn-primary" type="submit" value="Remove from Watchlist">
+            </form>
+            <hr>
+        {% else %}
+            <form action="{% url 'watchlist' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="listingid" value="{{ listing.id }}">
+                <input type="hidden" name="action" value="ADD">
+                <input class="btn btn-primary" type="submit" value="Add to Watchlist">
+            </form>
+            <hr>
+        {% endif %}
 
-        <h2>COMMENTS</h2>
-    {% for comment in comments %}
-    <p>{{ comment.comment }}</p>
-    {% endfor %}
+        {% if request.user == listing.creator and listing.active %}
+            <form action="{% url 'close' listing.id %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Close Listing">
+            </form>
+            <hr>
+        {% endif %}
+
+    {% else %}
+        <p>Must be logged in to bid and manage watchlist.</p>
+        <hr>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>BIDS</h2>
+
+                <table class="table">
+                    <tbody>
+                        {% for bid in bids %}
+                            <tr>
+                                <td>${{ bid.bid|floatformat:2 }}</td>
+                                <td>{{ bid.createdTimestamp }}</td>
+                                <td>{{ bid.user }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>${{ listing.startingBid|floatformat:2 }}</td>
+                            <td>Starting Bid</td>
+                            <td>{{ listing.creator }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-6">
+                <h2>COMMENTS</h2>
+                {% if request.user.is_authenticated %}
+                    <form action="{% url 'comment' listing.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="comment" required>
+                        <input class="btn btn-primary" type="submit" value="Add Comment">
+                    </form>
+                {% endif %}
+                
+                <table class="table">
+                    <tbody>
+                        {% for comment in comments %}
+                            <tr>
+                                <td>{{ comment.comment }}</td>
+                                <td>{{ comment.user }}</td>
+                                <td>{{ comment.createdTimestamp }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     
 {% endblock %}

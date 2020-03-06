@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if request.user.is_authenticated %}
+        <h2>Watchlist for {{ request.user.username }}</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Listing</th>
+                    <th>Description</th>
+                    <th>Current Price</th>
+                    <th>Category</th>
+                    <th>Photo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for listing in listings %}
+                    <tr>
+                        <td><a href="listing/{{ listing.id }}">{{ listing.title }}</a></td>
+                        <td>{{ listing.description }}</td>
+                        {% if listing.max_bid %}
+                            <td>${{ listing.max_bid|floatformat:2 }}</td>
+                        {% else %}
+                            <td>${{ listing.startingBid|floatformat:2 }}</td>
+                        {% endif %}
+                        <td>{{ listing.category }}</td>
+                        <td><img src="{{ listing.image }}"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Must be logged in to view watchlist.</p>
+    {% endif %}
+
+    
+{% endblock %}
