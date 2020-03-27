@@ -16,3 +16,8 @@ textarea {
     background-color: white;
     font-weight: bolder;
 }
+
+#send-error {
+    color: red; 
+    font-weight: bold;
+}

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   load_mailbox('inbox');
 });
 
-function compose_email(rec = '', sub = '', bod = '') {
+function compose_email(recipientsLoad = '', subjectLoad = '', bodyLoad = '') {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
@@ -18,16 +18,19 @@ function compose_email(rec = '', sub = '', bod = '') {
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields or fill with response
-  document.querySelector('#compose-recipients').value = rec;
-  document.querySelector('#compose-subject').value = sub;
-  document.querySelector('#compose-body').value = bod;
+  document.querySelector('#compose-recipients').value = recipientsLoad;
+  document.querySelector('#compose-subject').value = subjectLoad;
+  document.querySelector('#compose-body').value = bodyLoad;
+  document.querySelector('#send-error').innerHTML = '';
 
   //When email is sent, collect fields and POST to API
   document.querySelector('#compose-form').onsubmit = () => {
     const recipients = document.querySelector('#compose-recipients').value;
     const subject = document.querySelector('#compose-subject').value;
     const body = document.querySelector('#compose-body').value;
+    var responseStatus;
 
+    //POST values
     fetch('/emails', {
       method: 'POST',
       body: JSON.stringify({
@@ -36,13 +39,20 @@ function compose_email(rec = '', sub = '', bod = '') {
         body: body
       })
     })
-    .then(response => response.json())
+    .then(response => {
+      responseStatus = response.status;
+      return response.json();
+    })
     .then(result => {
       console.log(result);
+      //If send is successful, load inbox. Otherwise, alert user
+      if (responseStatus == 201) {
+        load_mailbox('sent');
+      } else {
+        document.querySelector('#send-error').innerHTML = result['error'];
+      }
     });
 
-    //Load sent mailbox
-    load_mailbox('sent');
     return false;
   }
 }
@@ -129,10 +139,10 @@ function load_email(email_id) {
     reply.className = "btn btn-sm btn-outline-primary";
     reply.innerHTML = "Reply";
     reply.addEventListener('click', function() {
-      rec = email['sender'];
-      sub = `Re: ${email['subject']}`;
-      bod = `\n\n---------------\nOn ${email['timestamp']} ${email['sender']} wrote:\n${email['body']}`;
-      compose_email(rec,sub,bod);
+      recipient = email['sender'];
+      subject = `Re: ${email['subject']}`;
+      body = `\n\n---------------\nOn ${email['timestamp']} ${email['sender']} wrote:\n${email['body']}`;
+      compose_email(recipient,subject,body);
     });
 
     //Create archive button and apply action
