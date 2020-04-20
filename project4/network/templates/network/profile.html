@@ -1,0 +1,39 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block head %}
+    <script src="{% static 'network/profile.js' %}"></script>
+    <script src="{% static 'network/helpers.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <h1 id="profile-username">{{ profileUser.username }}</h1>
+    <table>
+        <tr>
+            <td>Followers</td>
+            <td id="followers">{{ followers }}</td>
+        </tr>
+        <tr>
+            <td>Follows</td>
+            <td>{{ profileUser.followedUser__count }}</td>
+        </tr>
+    </table>
+    {% if user.is_authenticated %}
+        {% if user.id != profileUser.id %}
+            <div>
+                <form id="follow">
+                    <input type="hidden" id="following" value="{{ following }}"/>
+                    {% if following %}
+                        <input type="submit" id="follow-btn" class="btn btn-primary" value="Unfollow"/>
+                    {% else %}
+                        <input type="submit" id="follow-btn" class="btn btn-primary" value="Follow"/>
+                    {% endif %}
+                </form>
+            </div>
+            <br>
+            <br>
+        {% endif%}
+    {% endif %}
+    
+    <div id="posts"></div>
+{% endblock %}

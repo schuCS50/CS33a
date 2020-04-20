@@ -1,0 +1,11 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block head %}
+    <script src="{% static 'network/following.js' %}"></script>
+    <script src="{% static 'network/helpers.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <div id="posts"></div>
+{% endblock %}

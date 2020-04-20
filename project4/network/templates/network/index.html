@@ -1,0 +1,23 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block head %}
+    <script src="{% static 'network/index.js' %}"></script>
+    <script src="{% static 'network/helpers.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <div>
+        <h3>New Post</h3>
+        <form id="new-post">
+            <textarea class="form-control" id="post-body" placeholder="New Post" required></textarea>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    </div>
+    <br>
+    <br>
+    {% endif %}
+
+    <div id="posts" class="container"></div>
+{% endblock %}
