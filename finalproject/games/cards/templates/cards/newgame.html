@@ -1,0 +1,23 @@
+{% extends "cards/layout.html" %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+    {% if user.is_authenticated %}
+        <h1>Create a New Game</h1>
+        <h3>Select a user to play with:</h3>
+        <form action="{% url 'newgame' %}" method="POST">
+            {% csrf_token %}
+            <select class="form-control" name="player2" required>
+                {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" class="btn btn-primary"/>
+        </form>
+    {% else %}
+        <h1>Must be logged in to create a new game.</h1>
+    {% endif %}
+{% endblock %}

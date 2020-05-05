@@ -1,0 +1,30 @@
+{% extends "cards/layout.html" %}
+
+{% block body %}
+    {% if allGames %}
+        <h1><a href="{% url 'newgame' %}">Create a New Game</a></h1>
+        <hr>
+    {% endif %}
+    <table class="table">
+        <tr>
+            <th>Player 1</th>
+            <th>Player 2</th>
+            <th>Created</th>
+            <th>Winner</th>
+            <th>View Game</th>
+        </tr>
+        {% for game in games %}
+            <tr>
+                <td>{{ game.player1.username }}</td>
+                <td>{{ game.player2.username }}</td>
+                <td>{{ game.createdTimestamp }}</td>
+                {% if game.winner %}
+                    <td><b>{{ game.winner.username }}</b></td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
+                <td><a href="{% url 'tictactoe' game.id %}">View Game</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
