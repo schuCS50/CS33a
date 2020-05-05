@@ -84,6 +84,7 @@ def tictactoe_api(request, game_id):
 
 
 # Views from Chat WebSocket Example
+# Credit to the Django Channels Chat WebSocket example
 def chat(request):
     return render(request, 'cards/chat.html')
 
